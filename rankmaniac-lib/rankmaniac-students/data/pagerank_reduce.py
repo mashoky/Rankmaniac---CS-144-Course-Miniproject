@@ -6,8 +6,14 @@ import sys
 # This program simply represents the identity function.
 #
 sum = 0
-#node_idx = 1
+node_idx = 0
 for line in sys.stdin:
     sys.stdout.write(line)
-    #sum += 
+    values = line.split("\t")
+    node_idx = int(values[0])
+    
+    sum += int(values[1])
+new_rank = (0.85 * sum) + 0.15
+sys.stdout.write("%d\t%f" % (node_idx, new_rank))
+    
 
