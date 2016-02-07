@@ -16,4 +16,5 @@ for line in sys.stdin:
     curr_rank = node_info[0]
     num_neighbors = len(neighbors)
     for n in neighbors:
-        sys.stdout.write("%d\t%f" % (n, curr_rank / num_neighbors))
+        sys.stdout.write("%d\t%f\n" % (n, curr_rank / num_neighbors))
+        
