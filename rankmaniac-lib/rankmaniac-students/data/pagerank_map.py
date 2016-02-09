@@ -7,10 +7,12 @@ import sys
 #
 
 data = {}
+iter = 1
 for line in sys.stdin:
     #sys.stdout.write(line)
     if line.startswith('LATER_ITER'):
         values = line.split("\t")
+        iter = int(values[0].split( )[1])
         node_id = int(values[1])
         node_info = values[2].rstrip("\n").split( )
         if len(node_info) < 3:
@@ -23,6 +25,7 @@ for line in sys.stdin:
         data[node_id] = (curr_rank,prev_rank, neighbors)
             
     else:
+        
         values = line.split("\t")
         beginning = values[0].split(":")
         node_id = int(beginning[1])
@@ -39,6 +42,6 @@ for node in data.itervalues():
         n_neighbors = data[n][2]
         curr_rank = node[0]
         num_neighbors = len(node[2])
-        sys.stdout.write("%d\t%f %f %s\n" % (n, curr_rank / num_neighbors, \
-        curr_rank, ','.join(str(id) for id in n_neighbors) ))     
+        sys.stdout.write("%d %d\t%f %f %s\n" % (n, iter, curr_rank / num_neighbors, \
+        curr_rank, ','.join(str(id) for id in n_neighbors)))     
 

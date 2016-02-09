@@ -7,5 +7,9 @@ import sys
 #
 
 for line in sys.stdin:
+    #end = line.split(":")
+    #vals = end[1].rstrip("\n").split( )
+    #new_rank = float(vals[0]) * -1
+    #sys.stdout.write("FinalRank:%f %d\n" % (new_rank, int(vals[1])))
     sys.stdout.write(line)
 

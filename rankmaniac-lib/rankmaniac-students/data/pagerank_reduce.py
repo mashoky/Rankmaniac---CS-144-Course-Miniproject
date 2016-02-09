@@ -12,7 +12,8 @@ print_buffer = []
 for line in sys.stdin:
     #sys.stdout.write('Line:%s' %line)
     values = line.split("\t")
-    node_idx = int(values[0])
+    iter = int(values[0].split( )[1])
+    node_idx = int(values[0].split( )[0])
     node_info = values[1].rstrip("\n").split( )
     if node_idx == prev_idx or prev_idx == -1:
         sum += float(node_info[0])
@@ -26,7 +27,11 @@ for line in sys.stdin:
         new_rank = (0.85 * sum) + 0.15
         #print 'Change' + str(changed)
         #print prev_info
-        sys.stdout.write("LATER_ITER\t%d\t%f %f %s\n" % (prev_idx, new_rank, prev_rank, prev_info))
+        if iter < 50:    
+            sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx,\
+            new_rank, prev_rank, prev_info))
+        else:
+            sys.stdout.write("FinalRank:%f %d\n" % (new_rank, prev_idx))
         #else:
         #    print_buffer.append("%d\t%f %f %s" % (prev_idx, new_rank, prev_rank, prev_info))
         #sys.stdout.write("FinalRank:%f\t%s" % (float(new_rank), str(prev_idx)))
@@ -41,4 +46,9 @@ for line in sys.stdin:
             prev_info = node_info[2]
     prev_idx = node_idx
 new_rank = (0.85 * sum) + 0.15
-sys.stdout.write("LATER_ITER\t%d\t%f %f %s\n" % (prev_idx, new_rank, prev_rank, prev_info))
+if iter < 50:    
+    sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx, new_rank,\
+    prev_rank, prev_info))
+else:
+    sys.stdout.write("FinalRank:%f %d\n" % (new_rank, prev_idx))
+
