@@ -5,6 +5,7 @@ import sys
 #
 # This program simply represents the identity function.
 #
+final = []
 sum = 0
 prev_idx = -1
 changed = False
@@ -31,7 +32,7 @@ for line in sys.stdin:
             sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx,\
             new_rank, prev_rank, prev_info))
         else:
-            sys.stdout.write("FinalRank:%f %d\n" % (new_rank, prev_idx))
+            final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
         #else:
         #    print_buffer.append("%d\t%f %f %s" % (prev_idx, new_rank, prev_rank, prev_info))
         #sys.stdout.write("FinalRank:%f\t%s" % (float(new_rank), str(prev_idx)))
@@ -50,5 +51,10 @@ if iter < 50:
     sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx, new_rank,\
     prev_rank, prev_info))
 else:
-    sys.stdout.write("FinalRank:%f %d\n" % (new_rank, prev_idx))
+    final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
+if len(final) >= 20:
+    for i in range(20):
+        sys.stdout.write(max(final))
+        final.remove(max(final))
+        #sys.stdout.write(i)
 

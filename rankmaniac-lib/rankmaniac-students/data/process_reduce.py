@@ -16,8 +16,9 @@ for line in sys.stdin:
     #    new_rank = float(vals[0]) * -1
     #    sys.stdout.write("FinalRank:%f %d\n" % (new_rank, int(vals[1])))
     #rank_count += 1
-    lines.append(line)
-for i in range(20):
-    sys.stdout.write(lines.pop())
+#    lines.append(line)
+#for i in range(20):
+    #sys.stdout.write(lines.pop())
+    sys.stdout.write(line)
     
 
