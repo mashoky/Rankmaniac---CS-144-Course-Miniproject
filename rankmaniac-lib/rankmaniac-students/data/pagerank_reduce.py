@@ -32,7 +32,8 @@ for line in sys.stdin:
             sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx,\
             new_rank, prev_rank, prev_info))
         else:
-            final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
+            final.append("FinalRank:%f\t%d\n" % (-1 * new_rank, prev_idx))
+            #sys.stdout.write("FinalRank:%f\t%s\n" % (-1*float(new_rank), str(prev_idx)))
         #else:
         #    print_buffer.append("%d\t%f %f %s" % (prev_idx, new_rank, prev_rank, prev_info))
         #sys.stdout.write("FinalRank:%f\t%s" % (float(new_rank), str(prev_idx)))
@@ -51,10 +52,13 @@ if iter < 50:
     sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (iter + 1, prev_idx, new_rank,\
     prev_rank, prev_info))
 else:
-    final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
-if len(final) >= 20:
-    for i in range(20):
-        sys.stdout.write(max(final))
-        final.remove(max(final))
-        #sys.stdout.write(i)
+    sys.stdout.write("FinalRank:%f\t%d\n" % (-1*new_rank, prev_idx))
+#else:
+#    final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
+#if len(final) >= 20:
+#    for i in range(20):
+#        max_val = max(final)
+#        sys.stdout.write(max_val)
+#        final.remove(max_val)
+#        #sys.stdout.write(i)
 
