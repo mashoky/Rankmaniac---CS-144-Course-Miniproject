@@ -36,7 +36,9 @@ for line in sys.stdin:
         num_neighbors = len(neighbors)
         data[node_id] = (curr_rank,prev_rank, neighbors)
 
-for node in data.itervalues():
+for key, node in data.iteritems():
+    if len(node[2]) == 0:
+        sys.stdout.write("%d %d\t%f %f %s\n" %(key, iter, node[0], node[0],""))
     for n in node[2]:
         p_rank = data[n][1]
         n_neighbors = data[n][2]
