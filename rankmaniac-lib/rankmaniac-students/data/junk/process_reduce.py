@@ -9,15 +9,18 @@ import Queue
 
 rank_count = 0
 lines = []
-queue = Queue.Queue(20)
-final = False
 for line in sys.stdin:
-    #if rank_count < 20:
-    #    end = line.split(":")
-    #    vals = end[1].rstrip("\n").split( )
-    #    new_rank = float(vals[0]) * -1
-    #    sys.stdout.write("FinalRank:%f %d\n" % (new_rank, int(vals[1])))
-    #rank_count += 1
+    sys.stdout.write(line)
+    if line.startswith("F"):
+        sys.stdout.write('here')        
+        if rank_count < 20:
+            end = line.split(":")
+            vals = end[1].rstrip("\n").split( )
+            new_rank = float(vals[0]) * -1
+            sys.stdout.write("FinalRank:%f %d\n" % (new_rank, int(vals[1])))
+        rank_count += 1
+    else:
+        sys.stdout.write(line)
 #    lines.append(line)
 #for i in range(20):
     #sys.stdout.write(lines.pop())
@@ -29,15 +32,6 @@ for line in sys.stdin:
     #    sys.stdout.write("FinalRank:%f\t%s\n" % (abs(float(rank[0])), rank[1]))
     #else:
     #    sys.stdout.write(line)
-    if line.startswith('FinalRank'):
-        lines.append(line)
-        final = True
-    else:
-        sys.stdout.write(line)
-size = len(lines)
-if final:
-    for i in range(20):
-        sys.stdout.write(lines[size - i - 1])   
 
     
 
