@@ -23,7 +23,10 @@ for line in sys.stdin:
         curr_rank = float(node_info[0])
         prev_rank = float(node_info[1])
         num_neighbors = len(neighbors)
-        data[node_id] = (curr_rank,prev_rank, neighbors)
+        for n in neighbors:
+            sys.stdout.write("%d %d %d\t%f %f\n" % (n, node_id, iter, curr_rank / num_neighbors, \
+            curr_rank))  
+        sys.stdout.write("Node_info:%d\t%s\n" % (node_id, ','.join(map(str,neighbors))))
             
     else:
         
@@ -31,21 +34,16 @@ for line in sys.stdin:
         beginning = values[0].split(":")
         node_id = int(beginning[1])
         node_info = values[1].rstrip("\n").split(",")
-        neighbors = map(int, node_info[2:])
+        if len(node_info) < 3:
+            neighbors = []
+        else:
+            neighbors = map(int, node_info[2:])
         curr_rank = float(node_info[0])
         prev_rank = float(node_info[1])
         num_neighbors = len(neighbors)
-        if len(node_info) < 3:
-            neighbors = []
-        data[node_id] = (curr_rank,prev_rank, neighbors)
-
-for key, node in data.iteritems():
-    if len(node[2]) == 0:
-        sys.stdout.write("%d %d\t%f %f %s\n" %(key, itern, node[0], node[0],""))
-    for n in node[2]:
-        n_neighbors = data[n][2]
-        curr_rank = node[0]
-        num_neighbors = len(node[2])
-        sys.stdout.write("%d %d\t%f %f %s\n" % (n, itern, curr_rank / num_neighbors, \
-        curr_rank, ','.join(str(id) for id in n_neighbors)))     
-
+        if num_neighbors == 0:
+            sys.stdout.write("%d %d %d\t%f %f\n" %(node_id, node_id, itern, curr_rank, curr_rank))
+        for n in neighbors:
+            sys.stdout.write("%d %d %d\t%f %f\n" % (n, node_id, itern, curr_rank / num_neighbors, \
+            curr_rank))    
+        sys.stdout.write('Node_info:%d\t%s\n' % (node_id, ','.join(str(i) for i in neighbors)))
