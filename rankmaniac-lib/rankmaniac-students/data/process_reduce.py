@@ -35,13 +35,13 @@ for line in sys.stdin:
         if diff > 0.01:
             end = False
         else:
-            lines.append("LATER_ITER  %d\t%d\t%f %f %s\n" % (itern, node_id, large_num - curr, large_num - prev, neighbors))
+            lines.append("LATER_ITER %d\t%d\t%f %f %s\n" % (itern, node_id, large_num - curr, large_num - prev, neighbors))
             final.append("FinalRank:%f\t%s\n" % (large_num - curr, str(node_id)))
     else:
         if end:
             sys.stdout.write("FinalRank:%f\t%s\n" % (large_num - curr, str(node_id)))
         else:
-            sys.stdout.write("LATER_ITER  %d\t%d\t%f %f %s\n" % (itern,node_id, large_num - curr, large_num - prev, neighbors))
+            sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (itern,node_id, large_num - curr, large_num - prev, neighbors))
     rank_count += 1
     #if rank_count < 20:
     #    end = line.split(":")
