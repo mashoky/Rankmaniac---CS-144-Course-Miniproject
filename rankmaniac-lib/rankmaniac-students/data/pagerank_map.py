@@ -9,8 +9,11 @@ import sys
 data = {}
 itern = 1
 
+
 for line in sys.stdin:
     #sys.stdout.write(line)
+    #if line.endswith("Node_info\n"):
+    #    sys.stdout.write(line)
     if line.startswith('LATER_ITER'):
         values = line.split("\t")
         itern = int(values[0].split( )[1])
@@ -23,13 +26,18 @@ for line in sys.stdin:
         curr_rank = float(node_info[0])
         prev_rank = float(node_info[1])
         num_neighbors = len(neighbors)
+        if num_neighbors == 0:
+            sys.stdout.write("%d\t%d %f %f\n" %(node_id, itern, curr_rank, curr_rank))
+            sys.stdout.write('%d\tNode_info\n' % (node_id))
+        else:
+            sys.stdout.write('%d\t%s Node_info\n' % (node_id, ','.join(str(i) for i in neighbors)))
         for n in neighbors:
-            sys.stdout.write("%d %d %d\t%f %f\n" % (n, node_id, iter, curr_rank / num_neighbors, \
+            sys.stdout.write("%d\t%d %f %f\n" % (n, itern, curr_rank / num_neighbors, \
             curr_rank))  
-        sys.stdout.write("Node_info:%d\t%s\n" % (node_id, ','.join(map(str,neighbors))))
+
+
             
-    else:
-        
+    else:        
         values = line.split("\t")
         beginning = values[0].split(":")
         node_id = int(beginning[1])
@@ -42,8 +50,11 @@ for line in sys.stdin:
         prev_rank = float(node_info[1])
         num_neighbors = len(neighbors)
         if num_neighbors == 0:
-            sys.stdout.write("%d %d %d\t%f %f\n" %(node_id, node_id, itern, curr_rank, curr_rank))
+            sys.stdout.write("%d\t%d %f %f\n" %(node_id, itern, curr_rank, curr_rank))
+            sys.stdout.write('%d\tNode_info\n' % (node_id))
+        else:
+            sys.stdout.write('%d\t%s Node_info\n' % (node_id, ','.join(str(i) for i in neighbors)))
         for n in neighbors:
-            sys.stdout.write("%d %d %d\t%f %f\n" % (n, node_id, itern, curr_rank / num_neighbors, \
+            sys.stdout.write("%d\t%d %f %f\n" % (n, itern, curr_rank / num_neighbors, \
             curr_rank))    
-        sys.stdout.write('Node_info:%d\t%s\n' % (node_id, ','.join(str(i) for i in neighbors)))
+        

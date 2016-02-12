@@ -7,7 +7,7 @@ large_num = 99999
 # This program simply represents the identity function.
 #
 for line in sys.stdin:
-    if line.startswith('Node_info'):
+    if line.endswith('Node_info\n'):
         sys.stdout.write(line)
     else:
         values = line.split("\t")

@@ -10,61 +10,59 @@ sum = 0
 prev_idx = -1
 changed = False
 print_buffer = []
-#itern = 1
-#prev_rank = -1
-prev_info = ''
 
+prev_info = ''
+curr_info = ''
+itern = -1
+prev_rank = -1
+prev_empty = False
 for line in sys.stdin:
-    if line.startswith('Node_info'):
-        sys.stdout.write(line)
-    else:
-    #sys.stdout.write('Line:%s' %line)
+    if line.endswith('Node_info\n'):
         values = line.split("\t")
-        itern = int(values[0].split( )[2])
-        node_idx = int(values[0].split( )[0])
-        node_info = values[1].rstrip("\n").split( )
-        if node_idx == prev_idx or prev_idx == -1:
-            sum += float(node_info[0])
-            prev_rank = float(node_info[1])
-            if(len(node_info) < 3):
-                prev_info = ''
-            else:
-                prev_info = node_info[2]
-    
-        else:      
+        ending = values[1].split( )
+        #if prev_info != '' and len(ending) > 1:
+        #    curr_info = ending[0]
+        #if len(ending) > 1:    
+        #    prev_info = ending[0]
+        #else:
+        #    prev_info = ''
+        if prev_info != '' or (prev_info == '' and prev_empty):
             new_rank = (0.85 * sum) + 0.15
-            #print 'Change' + str(changed)
-            #print prev_info
-    #        if iter < 50:    
+            sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (itern + 1, prev_idx,\
+                new_rank, prev_rank, prev_info))     
+            sum = 0
+            prev_idx = int(values[0])
+            prev_empty = False
+        if len(ending) > 1:    
+            prev_info = ending[0]
+        else:
+            prev_info = ''  
+            prev_empty = True      
+    else:
+        values = line.split("\t")
+        node_idx = int(values[0])
+        node_info = values[1].rstrip("\n").split( )
+        itern = int(node_info[0])
+        if node_idx == prev_idx or prev_idx == -1:
+            sum += float(node_info[1])
+            prev_rank = float(node_info[2])
+    
+        else:     
+            new_rank = (0.85 * sum) + 0.15
             sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (itern + 1, prev_idx,\
                 new_rank, prev_rank, prev_info))
-            #else:
-            #   final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
-                #sys.stdout.write("FinalRank:%f\t%s\n" % (-1*float(new_rank), str(prev_idx)))
-            #else:
-            #    print_buffer.append("%d\t%f %f %s" % (prev_idx, new_rank, prev_rank, prev_info))
-            #sys.stdout.write("FinalRank:%f\t%s" % (float(new_rank), str(prev_idx)))
-            #sys.stdout.write("%d\t%f %f %s" % (prev_idx, new_rank, prev_rank, prev_info))
             
             sum = 0
             sum += float(node_info[0])
             prev_rank = float(node_info[1])
-            if(len(node_info) < 3):
-                prev_info = ''
-            else:
-                prev_info = node_info[2]
+            #if curr_info != '':
+            #    prev_info = curr_info
+            #    curr_info = ''
+            #else:
+            #    prev_info = ''
+            prev_info = ''
+            prev_empty = False
         prev_idx = node_idx
 new_rank = (0.85 * sum) + 0.15
-#if iter < 50:    
+   
 sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (itern + 1, prev_idx, new_rank, prev_rank, prev_info))
-#else:
-#    sys.stdout.write("FinalRank:%f\t%d\n" % (-1*new_rank, prev_idx))
-#else:
- #   final.append("FinalRank:%f\t%d\n" % (new_rank, prev_idx))
-#if len(final) >= 20:
-#    for i in range(20):
-#        max_val = max(final)
-#        sys.stdout.write(max_val)
-#        final.remove(max_val)
-        #sys.stdout.write(i)
-
