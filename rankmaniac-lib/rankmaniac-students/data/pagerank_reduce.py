@@ -47,14 +47,14 @@ for line in sys.stdin:
             sum += float(node_info[1])
             prev_rank = float(node_info[2])
     
-        else:     
+        else:  
             new_rank = (0.85 * sum) + 0.15
             sys.stdout.write("LATER_ITER %d\t%d\t%f %f %s\n" % (itern + 1, prev_idx,\
                 new_rank, prev_rank, prev_info))
             
             sum = 0
-            sum += float(node_info[0])
-            prev_rank = float(node_info[1])
+            sum += float(node_info[1])
+            prev_rank = float(node_info[2])
             #if curr_info != '':
             #    prev_info = curr_info
             #    curr_info = ''
